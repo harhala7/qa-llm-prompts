@@ -29,6 +29,7 @@ Provide OpenAPI excerpt or a precise endpoint description.
 -Out of scope: <if any>
 
 -Known incidents / recent changes (optional): <if any>
+
 ---
 ### 3) Execution constraints (optional)
 
@@ -39,6 +40,7 @@ Provide OpenAPI excerpt or a precise endpoint description.
 -Test data strategy: <seeded / ephemeral / shared env>
 
 -Observability: <logs / metrics / traces / request-id>
+
 ---
 Non-negotiables
 
@@ -53,6 +55,7 @@ Non-negotiables
 -Output MUST follow the contract below exactly.
 
 -Do not include commentary outside the output contract.
+
 ---
 Clarification gate (mandatory)
 
@@ -77,6 +80,7 @@ Rules:
 -Each question must unblock a concrete decision.
 
 -Do not proceed until clarified.
+
 ---
 Risk model (must drive prioritization)
 
@@ -113,6 +117,7 @@ Common risk areas (use only if applicable to inputs):
 -timeouts
 
 -observability
+
 ---
 Output contract (STRICT)
 
@@ -172,6 +177,7 @@ Priority rules
 -P1: important negatives, validation, boundary conditions, common failures
 
 -P2: low-impact, rare, cosmetic, informational
+
 ---
 Rules:
 
@@ -181,6 +187,7 @@ Rules:
 
 -If performance or SLA is unknown, DO NOT fabricate numbers.
 Use a note instead.
+
 ---
 Required coverage buckets (if applicable)
 
@@ -201,6 +208,7 @@ Produce at least one testcase per bucket when present in the spec:
 -Concurrency and race conditions (P1) where applicable
 
 -Observability and correlation IDs (P2) if supported
+
 ---
 Task
 
