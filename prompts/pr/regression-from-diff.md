@@ -31,121 +31,121 @@ list of changed files with relevant snippets
 ---
 ### 3) System Context (required)
 
--Components / services affected:
+- Components / services affected:
 
--Deployment scope: <single service / multi-service / shared lib>
+- Deployment scope: <single service / multi-service / shared lib>
 
--Critical user journeys:
+- Critical user journeys:
 
--Data stores involved:
+- Data stores involved:
 
--Auth mechanisms involved:
+- Auth mechanisms involved:
 
--Backward compatibility expectations:
+- Backward compatibility expectations:
 
--Rollout strategy: <all at once / canary / feature flag>
+- Rollout strategy: <all at once / canary / feature flag>
 
--Monitoring & alerting available:
+- Monitoring & alerting available:
 
 ---
 
 ### Non-negotiables
 
--Do not assume behavior not evidenced in the diff or context.
+- Do not assume behavior not evidenced in the diff or context.
 
--If the change intent or scope is unclear, STOP and ask clarifying questions.
+- If the change intent or scope is unclear, STOP and ask clarifying questions.
 
--Prefer minimal, high-signal regression over exhaustive testing.
+- Prefer minimal, high-signal regression over exhaustive testing.
 
--Tie every test or risk to evidence in the diff.
+- Tie every test or risk to evidence in the diff.
 
--Do not invent tests for unaffected areas.
+- Do not invent tests for unaffected areas.
 
--Output MUST follow the format below exactly.
+- Output MUST follow the format below exactly.
 
 ---
 ### Clarification gate (mandatory)
 
--If any of the following are unclear, ask questions and STOP:
+- If any of the following are unclear, ask questions and STOP:
 
--intended behavior change vs refactor
+- intended behavior change vs refactor
 
--backward compatibility expectations
+- backward compatibility expectations
 
--data migration or schema impact
+- data migration or schema impact
 
--feature flag or config behavior
+- feature flag or config behavior
 
--deployment and rollback strategy
+- deployment and rollback strategy
 
 ---
 #### Rules:
 
--Ask a maximum of 7 questions.
+- Ask a maximum of 7 questions.
 
--Each question must unblock a concrete risk or test decision.
+- Each question must unblock a concrete risk or test decision.
 
--Do not proceed until clarified.
+- Do not proceed until clarified.
 
 ### Risk model
 
--Create a concise risk register derived directly from the diff.
+- Create a concise risk register derived directly from the diff.
 
 ### Risk scale:
 
--Impact: Low / Med / High
+- Impact: Low / Med / High
 
--Likelihood: Low / Med / High
+- Likelihood: Low / Med / High
 
 #### Common regression risk areas (use only if supported by inputs):
 
--authn / authz
+- authn / authz
 
--data persistence and migrations
+- data persistence and migrations
 
--serialization / deserialization
+- serialization / deserialization
 
--config and feature flags
+- config and feature flags
 
--default values and fallbacks
+- default values and fallbacks
 
--backward compatibility
+- backward compatibility
 
--error handling and mapping
+- error handling and mapping
 
--concurrency and race conditions
+- concurrency and race conditions
 
--caching and invalidation
+- caching and invalidation
 
--performance and timeouts
+- performance and timeouts
 
--logging and observability
+- logging and observability
 
 ---
 ### Output format (STRICT)
 #### Summary
 
--Change intent:
+- Change intent:
 
--Areas touched:
+- Areas touched:
 
--Non-obvious side effects:
+- Non-obvious side effects:
 
 ---
 ### Risk Register
 ```
--Risk ID	Area	
--Impact	Likelihood	
--Evidence in diff	
--What could break					
+- Risk ID	Area	
+- Impact	Likelihood	
+- Evidence in diff	
+- What could break					
 ```
 ### Regression Checklist (ordered by priority)
 ```
--Test ID	Priority	
--Type (manual / auto)	
--Scope (unit / component / integration / e2e)	
--What to execute	
--Expected result	Risk refs					
+- Test ID	Priority	
+- Type (manual / auto)	
+- Scope (unit / component / integration / e2e)	
+- What to execute	
+- Expected result	Risk refs					
 ```
 
 #### Rules:
@@ -164,19 +164,19 @@ Each test MUST reference at least one risk.
 
 #### List only cases directly implied by the diff.
 
--EC-1:
+- EC-1:
 
--EC-2:
+- EC-2:
 
 ---
 
 ### Observability & Rollback Signals
 
--Metrics or logs to watch:
+- Metrics or logs to watch:
 
--Symptoms that require rollback:
+- Symptoms that require rollback:
 
--Data integrity checks post-deploy:
+- Data integrity checks post-deploy:
 
 ---
 
