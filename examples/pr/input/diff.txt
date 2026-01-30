@@ -1,0 +1,32 @@
+diff --git a/order-service/src/status.ts b/order-service/src/status.ts
+index a12b3c4..d45e6f7 100644
+--- a/order-service/src/status.ts
++++ b/order-service/src/status.ts
+@@ -1,6 +1,14 @@
+ export enum OrderStatus {
+   CREATED = "CREATED",
+   PAID = "PAID",
++  CANCELLED = "CANCELLED",
+   SHIPPED = "SHIPPED"
+ }
+
+-export function canTransition(from: OrderStatus, to: OrderStatus): boolean {
+-  return from !== OrderStatus.SHIPPED;
++export function canTransition(from: OrderStatus, to: OrderStatus): boolean {
++  if (from === OrderStatus.CANCELLED) {
++    return false;
++  }
++  return true;
+ }
+
+diff --git a/order-service/src/api/mapper.ts b/order-service/src/api/mapper.ts
+index 91ab22c..bb23cc1 100644
+--- a/order-service/src/api/mapper.ts
++++ b/order-service/src/api/mapper.ts
+@@ -20,6 +20,9 @@ export function mapOrderResponse(order: Order) {
+     status: order.status,
+     total: order.total
+   };
++
++  // CANCELLED orders should not expose shipment details
+ }

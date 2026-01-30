@@ -1,0 +1,13 @@
+Title: Refactor order status handling and add CANCELLED state
+
+Description:
+This PR refactors order status transitions to use a centralized state machine.
+A new CANCELLED status has been added.
+
+Changes include:
+- New enum value CANCELLED
+- Refactor of status transition logic
+- Update to API response mapping for order status
+- Minor cleanup in order service
+
+No database schema changes expected.
