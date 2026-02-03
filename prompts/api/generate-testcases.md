@@ -42,88 +42,65 @@ Provide OpenAPI excerpt or a precise endpoint description.
 -Observability: <logs / metrics / traces / request-id>
 
 ---
-Non-negotiables
+## Mode selection (required)
+Set one:
+- MODE=CLARIFY
+- MODE=EXECUTE
 
--Do not invent endpoints, fields, status codes, or behaviors not present in the spec or context.
-
--If critical details are missing, STOP and ask clarifying questions before producing test cases.
-
--Prefer risk-based selection over exhaustive enumeration.
-
--Make assumptions explicit and reference them using IDs (A1, A2, ...).
-
--Output MUST follow the contract below exactly.
-
--Do not include commentary outside the output contract.
+If MODE is not provided, default to MODE=CLARIFY.
 
 ---
-Clarification gate (mandatory)
 
+## Non-negotiables
+1. Do not invent endpoints, fields, status codes, or behaviors not present in the spec or context.
+2. MODE=CLARIFY: ask questions and STOP. Do not output JSON.
+3. MODE=EXECUTE: output VALID JSON ONLY. Do not ask questions.
+4. Prefer risk-based selection over exhaustive enumeration.
+5. Make assumptions explicit and reference them using IDs (A1, A2, ...), but only in MODE=EXECUTE.
+6. In MODE=EXECUTE, if required inputs are missing, refuse and instruct rerun in MODE=CLARIFY.
+
+---
+
+## Clarification gate (MODE=CLARIFY only)
 If any of the following are missing or ambiguous, ask questions and STOP:
-
--authentication mechanism or required headers
-
--request and response schema
-
--expected success and error status codes
-
--idempotency or concurrency expectations for write endpoints
-
--pagination, filtering, or sorting rules (if listing resources)
-
--validation rules (required fields, formats, ranges)
+- authentication mechanism or required headers
+- request and response schema
+- expected success and error status codes
+- idempotency or concurrency expectations for write endpoints
+- pagination, filtering, or sorting rules (if listing resources)
+- validation rules (required fields, formats, ranges)
 
 Rules:
+- Ask a maximum of 7 questions.
+- Each question must unblock a concrete decision.
 
--Ask a maximum of 7 questions.
+### MODE=CLARIFY output format (STRICT)
+Return Markdown only:
 
--Each question must unblock a concrete decision.
+Questions:
+1. <question>
+2. <question>
+...
+(up to 7)
 
--Do not proceed until clarified.
+Stop after questions.
 
 ---
-Risk model (must drive prioritization)
 
+## Risk model (MODE=EXECUTE only)
 Create a short risk register and reference risks in test cases.
 
 Risk scale:
-
--Impact: Low / Med / High
-
--Likelihood: Low / Med / High
-
-Common risk areas (use only if applicable to inputs):
-
--authn / authz
-
--data validation
-
--error handling
-
--idempotency
-
--pagination
-
--rate limiting
-
--backward compatibility
-
--data integrity
-
--concurrency
-
--caching
-
--timeouts
-
--observability
+- Impact: Low / Med / High
+- Likelihood: Low / Med / High
 
 ---
-Output contract (STRICT)
 
+## Output contract (MODE=EXECUTE only, STRICT)
 Return VALID JSON ONLY, matching the structure below.
 No markdown. No prose. No comments.
-```
+
+```json
 {
   "meta": {
     "artifact": "api_testcases",
@@ -167,51 +144,10 @@ No markdown. No prose. No comments.
     }
   ]
 }
-```
 
----
-Priority rules
-
--P0: core flows, auth, data integrity, security, money, high blast radius
-
--P1: important negatives, validation, boundary conditions, common failures
-
--P2: low-impact, rare, cosmetic, informational
-
----
-Rules:
-
--Every testcase MUST reference at least one risk.
-
--Assertions must be concrete and testable.
-
--If performance or SLA is unknown, DO NOT fabricate numbers.
-Use a note instead.
-
----
-Required coverage buckets (if applicable)
-
-Produce at least one testcase per bucket when present in the spec:
-
--Happy path core flow (P0)
-
--Authentication and authorization (P0 / P1)
-
--Validation and boundary values (P1)
-
--Error payload shape and mapping (P1)
-
--Idempotency and retry safety (P0 / P1) for POST/PUT/PATCH
-
--Pagination, filtering, sorting (P1) where applicable
-
--Concurrency and race conditions (P1) where applicable
-
--Observability and correlation IDs (P2) if supported
-
----
 Task
 
-Using the provided inputs, produce output strictly matching the JSON contract.
+If MODE=CLARIFY: produce only the questions and stop.
 
+If MODE=EXECUTE: produce only the JSON output contract.
 ---

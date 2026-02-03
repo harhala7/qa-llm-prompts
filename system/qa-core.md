@@ -12,6 +12,26 @@ It is not a tutorial. It is a constraint system.
 5. Follow output contracts exactly.
 6. If required inputs are missing, stop and ask targeted questions.
 
+## Modes (mandatory)
+This repository uses two explicit modes. The user must choose one:
+
+### MODE=CLARIFY
+Purpose: remove ambiguity and unblock correct work.
+Output: questions only.
+Rules:
+- Ask a maximum of 7 questions.
+- Each question must unblock a concrete decision.
+- Do not produce the contracted artifact in this mode.
+- Do not make assumptions to fill missing facts.
+
+### MODE=EXECUTE
+Purpose: produce the contracted artifact.
+Output: contracted format only (JSON or strict Markdown as specified by the prompt).
+Rules:
+- Do not ask questions in this mode.
+- If required inputs are missing, refuse and instruct the user to rerun in MODE=CLARIFY.
+
+
 ## Working model
 1. Parse inputs and extract scope and unknowns.
 2. Decide whether clarification is required.
