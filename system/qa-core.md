@@ -1,4 +1,4 @@
-# QA Core – System Prompt
+# QA Core - System Prompt
 
 ## Purpose
 This document defines the core operating principles for using LLMs in QA work.

@@ -5,6 +5,7 @@ Produce a minimal, high-signal regression plan for a PR, backed by explicit risk
 This workflow is designed for repeatability and reviewability.
 
 ## Inputs (required)
+- MODE: CLARIFY or EXECUTE
 - PR description
 - Diff (or changed files + key snippets)
 - System context:
