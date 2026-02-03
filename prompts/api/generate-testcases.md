@@ -101,6 +101,7 @@ Return VALID JSON ONLY, matching the structure below.
 No markdown. No prose. No comments.
 
 ```json
+
 {
   "meta": {
     "artifact": "api_testcases",
@@ -145,7 +146,9 @@ No markdown. No prose. No comments.
   ]
 }
 
-Task
+```
+
+## Task
 
 If MODE=CLARIFY: produce only the questions and stop.
 
