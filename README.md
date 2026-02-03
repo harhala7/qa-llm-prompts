@@ -1,17 +1,17 @@
 # qa-llm-prompts
 
-Engineering-grade prompts and workflows for QA work assisted by LLMs.
-This repository treats prompts like code: versioned, refactorable, and constrained by output contracts.
+Engineering-grade prompts and workflows for QA tasks with LLM assistance.
+Prompts are treated like code: versioned, refactorable, and constrained by output contracts.
 
 ## What this repository is
 - A reusable prompt system for real QA tasks (API testing, PR regression)
-- A set of repeatable workflows that combine prompts into processes
-- Examples that show realistic inputs and expected outputs
+- A set of repeatable workflows that sequence prompts into processes
+- Examples with realistic inputs and expected outputs
 
 ## What this repository is not
 - A collection of generic "act as a senior QA" prompts
 - A tutorial or a theoretical guide
-- A replacement for testing, this is decision support
+- A replacement for testing; this is decision support
 
 ## Structure
 - `system/`
@@ -25,7 +25,7 @@ This repository treats prompts like code: versioned, refactorable, and constrain
   - realistic inputs and expected outputs for credibility and reuse
 
 ## Quick start
-1. Read `system/qa-core.md` and apply it as the base system prompt.
+1. Use `system/qa-core.md` as the base system prompt.
 2. Choose a task prompt:
    - API test design: `prompts/api/generate-testcases.md`
    - PR regression: `prompts/pr/regression-from-diff.md`
