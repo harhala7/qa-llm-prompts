@@ -80,21 +80,23 @@ A regression checklist you can paste into:
 
 ## Step 3: Decide what to automate now vs later
 ### Action
-Tag each check as:
-- manual now
-- automate now
-- automate later
+For each regression check, fill two separate fields:
+- Execution: manual / auto
+- Automation plan: now / later / n/a
 
 ### Decision rules
-Automate now if:
+Set Automation plan = now if:
 - it covers P0/P1 risks
 - it is stable and deterministic
 - it will be reused frequently
 
-Automate later if:
+Set Automation plan = later if:
 - environment/test data is unstable
 - it is rare or low impact
 - it depends on unclear requirements
+
+Set Automation plan = n/a if:
+- the check is intentionally manual-only (e.g., exploratory)
 
 ---
 
