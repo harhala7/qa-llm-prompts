@@ -25,7 +25,7 @@ Prompts are treated like code: versioned, refactorable, and constrained by outpu
   - realistic inputs and expected outputs for credibility and reuse
 
 ## Quick start
-1. Use `system/qa-core.md` as the base system prompt.
+1. Read system/qa-core.md and apply it as the base system prompt.
 2. Choose a task prompt:
    - API test design: `prompts/api/generate-testcases.md`
    - PR regression: `prompts/pr/regression-from-diff.md`

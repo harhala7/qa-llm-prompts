@@ -12,8 +12,10 @@ It is not a tutorial. It is a constraint system.
 5. Follow output contracts exactly.
 6. If required inputs are missing, stop and ask targeted questions.
 
-## Modes (mandatory)
-This repository uses two explicit modes. The user must choose one:
+## Modes (mandatory behavior)
+This repository uses two explicit modes. The user should provide MODE.
+
+If MODE is missing, default to MODE=CLARIFY.
 
 ### MODE=CLARIFY
 Purpose: remove ambiguity and unblock correct work.
@@ -30,7 +32,6 @@ Output: contracted format only (JSON or strict Markdown as specified by the prom
 Rules:
 - Do not ask questions in this mode.
 - If required inputs are missing, refuse and instruct the user to rerun in MODE=CLARIFY.
-
 
 ## Working model
 1. Parse inputs and extract scope and unknowns.
