@@ -1,3 +1,5 @@
+MODE=EXECUTE
+
 Title: Refactor order status handling and add CANCELLED state
 
 Description:
