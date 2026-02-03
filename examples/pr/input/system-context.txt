@@ -2,7 +2,7 @@ Components / services affected: order-service
 Deployment scope: single service
 Critical user journeys: create order, pay order, cancel order, ship order
 Data stores involved: orders database (no schema changes expected)
-Auth mechanisms involved: service-to-service auth and user JWT (assumed)
+Auth mechanisms involved: user JWT (assumed) and service-to-service auth
 Backward compatibility expectations: existing clients must tolerate new status value
 Rollout strategy: all at once
 Monitoring & alerting available: error rate dashboards, request logs, trace IDs

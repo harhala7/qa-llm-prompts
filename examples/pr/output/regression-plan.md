@@ -10,8 +10,8 @@
 ### Risk Register
 | Risk ID | Area | Impact | Likelihood | Evidence in diff | What could break |
 |---|---|---|---|---|---|
-| R1 | state transitions | High | Med | canTransition changed to block from CANCELLED and allow others | Orders may move to invalid states or allow forbidden transitions |
-| R2 | api contract | High | Med | mapper comment: CANCELLED should not expose shipment details | Clients receive unexpected fields or missing fields |
+| R1 | state transitions | High | Med | canTransition changed to block from CANCELLED and allow others | Orders may allow forbidden transitions or end in inconsistent states |
+| R2 | api contract | High | Med | mapper comment: CANCELLED should not expose shipment details | Clients may receive unexpected fields or missing fields |
 | R3 | backward compatibility | Med | Low | new enum value CANCELLED | Older clients fail to parse or display status |
 
 ### Regression Checklist (ordered by priority)
@@ -20,7 +20,7 @@
 | T1 | P0 | auto | now | integration | Create order, cancel it, attempt transition to PAID/SHIPPED | Transition blocked after CANCELLED | R1 |
 | T2 | P0 | auto | now | integration | GET order with status CANCELLED | Status returned, shipment details not present | R2 |
 | T3 | P1 | manual | n/a | e2e | Verify client behavior when receiving CANCELLED | No client-side failure, graceful handling | R3 |
-| T4 | P1 | auto | later | component | Attempt to cancel an order in SHIPPED state | Cancel rejected (or handled per rules), no inconsistent state | R1 |
+| T4 | P1 | auto | later | component | Attempt to cancel an order in SHIPPED state | Cancel rejected or handled per rules, no inconsistent state | R1 |
 
 ### Targeted Negative & Edge Cases
 - EC-1: Cancel order twice
@@ -28,5 +28,6 @@
 
 ### Observability & Rollback Signals
 - Metrics or logs to watch: error rate on order status transitions, API 4xx/5xx for order endpoints, client error logs for enum parsing
-- Symptoms that require rollback: sustained increase in transition failures, client parsing failures causing core journey break
-- Data integrity checks post-deploy: sample orders in CANCELLED state have no shipment details exposed, no illegal state transitions recorded
+- Symptoms that require rollback: sustained increase in transition failures, client parsing failures breaking core journey
+- Data integrity checks post-deploy: CANCELLED orders do not expose shipment details, no illegal transitions recorded
+
