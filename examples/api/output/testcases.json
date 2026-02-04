@@ -1,0 +1,185 @@
+{
+  "meta": {
+    "artifact": "api_testcases",
+    "version": "1.0",
+    "source": "user_input",
+    "assumptions": [
+      { "id": "A1", "text": "JWT is required via Authorization: Bearer <token> for all endpoints shown." },
+      { "id": "A2", "text": "Error responses (400/401/404) return JSON bodies even though schemas are not provided." }
+    ]
+  },
+  "risks": [
+    {
+      "id": "R1",
+      "area": "authn",
+      "impact": "High",
+      "likelihood": "Med",
+      "rationale": "401 is defined, JWT is used, and missing/invalid auth could block core flows."
+    },
+    {
+      "id": "R2",
+      "area": "data validation",
+      "impact": "High",
+      "likelihood": "Med",
+      "rationale": "POST /orders has required fields and min constraints; weak validation can cause bad data and downstream failures."
+    },
+    {
+      "id": "R3",
+      "area": "error handling",
+      "impact": "Med",
+      "likelihood": "Med",
+      "rationale": "400/401/404 are defined without schemas; clients rely on consistent error mapping and payload shape."
+    }
+  ],
+  "testcases": [
+    {
+      "id": "TC-001",
+      "priority": "P0",
+      "risk_refs": ["R1"],
+      "title": "POST /orders returns 401 when Authorization header is missing",
+      "endpoint": "POST /orders",
+      "preconditions": [],
+      "request": {
+        "headers": {},
+        "query": {},
+        "path_params": {},
+        "body": {
+          "items": [{ "sku": "SKU-1", "quantity": 1 }],
+          "currency": "GBP"
+        }
+      },
+      "assertions": [
+        { "type": "status_code", "expected": "401" }
+      ],
+      "notes": "If error body is JSON, validate presence of error code/message in a follow-up once schema is known."
+    },
+    {
+      "id": "TC-002",
+      "priority": "P0",
+      "risk_refs": ["R1"],
+      "title": "POST /orders returns 201 with valid JWT and valid payload",
+      "endpoint": "POST /orders",
+      "preconditions": ["Valid JWT token available"],
+      "request": {
+        "headers": { "Authorization": "Bearer <token>" },
+        "query": {},
+        "path_params": {},
+        "body": {
+          "items": [{ "sku": "SKU-1", "quantity": 1 }],
+          "currency": "GBP"
+        }
+      },
+      "assertions": [
+        { "type": "status_code", "expected": "201" },
+        { "type": "schema", "expected": "matches_spec" },
+        { "type": "field", "path": "$.id", "expected": "not_null" },
+        { "type": "field", "path": "$.status", "expected": "CREATED" },
+        { "type": "field", "path": "$.total", "expected": ">=0" }
+      ],
+      "notes": "Capture created order id for GET tests."
+    },
+    {
+      "id": "TC-003",
+      "priority": "P1",
+      "risk_refs": ["R2"],
+      "title": "POST /orders returns 400 when items is empty",
+      "endpoint": "POST /orders",
+      "preconditions": ["Valid JWT token available"],
+      "request": {
+        "headers": { "Authorization": "Bearer <token>" },
+        "query": {},
+        "path_params": {},
+        "body": {
+          "items": [],
+          "currency": "GBP"
+        }
+      },
+      "assertions": [
+        { "type": "status_code", "expected": "400" }
+      ],
+      "notes": "OpenAPI defines minItems: 1 for items."
+    },
+    {
+      "id": "TC-004",
+      "priority": "P1",
+      "risk_refs": ["R2"],
+      "title": "POST /orders returns 400 when quantity is 0",
+      "endpoint": "POST /orders",
+      "preconditions": ["Valid JWT token available"],
+      "request": {
+        "headers": { "Authorization": "Bearer <token>" },
+        "query": {},
+        "path_params": {},
+        "body": {
+          "items": [{ "sku": "SKU-1", "quantity": 0 }],
+          "currency": "GBP"
+        }
+      },
+      "assertions": [
+        { "type": "status_code", "expected": "400" }
+      ],
+      "notes": "OpenAPI defines minimum: 1 for quantity."
+    },
+    {
+      "id": "TC-005",
+      "priority": "P1",
+      "risk_refs": ["R2"],
+      "title": "POST /orders returns 400 when currency is not in enum",
+      "endpoint": "POST /orders",
+      "preconditions": ["Valid JWT token available"],
+      "request": {
+        "headers": { "Authorization": "Bearer <token>" },
+        "query": {},
+        "path_params": {},
+        "body": {
+          "items": [{ "sku": "SKU-1", "quantity": 1 }],
+          "currency": "USD"
+        }
+      },
+      "assertions": [
+        { "type": "status_code", "expected": "400" }
+      ],
+      "notes": "OpenAPI defines enum: GBP, EUR."
+    },
+    {
+      "id": "TC-006",
+      "priority": "P0",
+      "risk_refs": ["R1", "R3"],
+      "title": "GET /orders/{id} returns 200 and matches spec for an existing order id",
+      "endpoint": "GET /orders/{id}",
+      "preconditions": ["Existing order id available", "Valid JWT token available"],
+      "request": {
+        "headers": { "Authorization": "Bearer <token>" },
+        "query": {},
+        "path_params": { "id": "<existing_order_id>" },
+        "body": {}
+      },
+      "assertions": [
+        { "type": "status_code", "expected": "200" },
+        { "type": "schema", "expected": "matches_spec" },
+        { "type": "field", "path": "$.id", "expected": "not_null" },
+        { "type": "field", "path": "$.status", "expected": "in_enum" },
+        { "type": "field", "path": "$.total", "expected": ">=0" }
+      ],
+      "notes": "Status enum includes CREATED, CANCELLED."
+    },
+    {
+      "id": "TC-007",
+      "priority": "P1",
+      "risk_refs": ["R3"],
+      "title": "GET /orders/{id} returns 404 for non-existent order id",
+      "endpoint": "GET /orders/{id}",
+      "preconditions": ["Valid JWT token available"],
+      "request": {
+        "headers": { "Authorization": "Bearer <token>" },
+        "query": {},
+        "path_params": { "id": "non-existent-id" },
+        "body": {}
+      },
+      "assertions": [
+        { "type": "status_code", "expected": "404" }
+      ],
+      "notes": "If error body is JSON, validate consistent error mapping once schema is known."
+    }
+  ]
+}

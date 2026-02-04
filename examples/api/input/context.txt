@@ -1,0 +1,17 @@
+MODE=EXECUTE
+
+Environments: stage
+Auth: JWT
+Base URL: https://api.example.test
+Data constraints / business rules:
+- currency must be GBP or EUR
+- items[].quantity must be >= 1
+Out of scope:
+- payment processing
+Known incidents / recent changes:
+- None
+Execution constraints:
+- Tooling: Postman
+- Rate limits: unknown
+- Test data: ephemeral
+- Observability: request-id header in responses
