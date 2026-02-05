@@ -48,3 +48,13 @@ Prompts and workflows evolve. Breaking changes should be introduced via:
 Keep changes small and reviewable:
 - one prompt or workflow change per PR
 - update or add an example when behavior changes
+
+## How I use this in real QA work
+
+- I start in MODE=CLARIFY to remove ambiguity in specs or PR descriptions.
+- I treat LLM output as a decision-support artifact, not as executable truth.
+- For PRs, I use the regression prompt to identify high-risk areas from diffs and scope regression deliberately.
+- For APIs, I generate a minimal, risk-based test set aligned to OpenAPI and system context.
+- I convert P0 cases into automation candidates and keep P1/P2 as targeted or exploratory checks.
+- I keep prompts and workflows versioned and update examples whenever the contract changes.
+
