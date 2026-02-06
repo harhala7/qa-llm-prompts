@@ -58,3 +58,5 @@ Keep changes small and reviewable:
 - I convert P0 cases into automation candidates and keep P1/P2 as targeted or exploratory checks.
 - I keep prompts and workflows versioned and update examples whenever the contract changes.
 
+## License
+MIT
