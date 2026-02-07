@@ -7,6 +7,20 @@ This repo treats prompts like code:
 - contracts are explicit
 - examples are kept consistent with prompt output formats
 
+## v0.2.0
+Lightweight contract quality gates.
+
+### Added
+- GitHub Actions workflow `contract-check` to enforce repository contracts.
+- Automated validation of JSON example outputs.
+- Automated check for explicit MODE (CLARIFY / EXECUTE) in all example inputs.
+- Automated detection of unbalanced Markdown code fences.
+- Local contract check script (`tools/contract_check.py`) aligned with CI behavior.
+
+### Notes
+- Quality gates validate repository integrity only.
+- No LLM execution or test execution is performed in CI.
+
 ## v0.1.0
 Initial public release with stable contracts.
 
