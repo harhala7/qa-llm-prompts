@@ -1,0 +1,25 @@
+MODE=EXECUTE
+
+Bug report:
+After the latest deployment, users report that submitting the checkout form sometimes fails with a generic error message.
+The page reloads and the order is not created.
+
+Expected behavior:
+The order should be created and the user should be redirected to the confirmation page.
+
+Actual behavior:
+The page reloads, shows a generic "Something went wrong" message, and no order is created.
+
+Environment:
+- Production
+- Web application (frontend + backend)
+- Affects logged-in users
+
+Frequency / reproducibility:
+- Intermittent
+- Reported by multiple users within the last hour
+
+Additional context:
+- Deployment completed ~30 minutes before first reports
+- No clear error message shown to users
+- Customer support reports increased contact volume
