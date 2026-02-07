@@ -7,6 +7,18 @@ This repo treats prompts like code:
 - contracts are explicit
 - examples are kept consistent with prompt output formats
 
+## v0.3.0
+Bug triage decision support.
+
+### Added
+- Bug triage prompt with CLARIFY and EXECUTE modes.
+- Example demonstrating real-world bug triage output.
+- Bug triage loop workflow defining a repeatable QA decision process.
+
+### Notes
+- Bug triage is treated as a decision-support activity.
+- Outputs are designed to be pasted directly into issue trackers (e.g. Jira).
+
 ## v0.2.0
 Lightweight contract quality gates.
 
