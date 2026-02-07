@@ -1,3 +1,5 @@
+MODE=EXECUTE
+
 diff --git a/order-service/src/status.ts b/order-service/src/status.ts
 index a12b3c4..d45e6f7 100644
 --- a/order-service/src/status.ts
